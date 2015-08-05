@@ -1,0 +1,22 @@
+galen:
+  image: typingincolor/reqbot
+  ports:
+    - "8080:8080"
+  links:
+    - influxdb
+  environment:
+    - REQBOT_REDIS_HOST=redis
+galenweb:
+  image: typingincolor/reqbot-web
+  ports:
+    - "8081:8081"
+  links:
+    - reqbot
+  environment:
+    - REQBOT_API_URL=http://reqbot:8080
+redis:
+  image: redis
+  ports:
+    - 6379
+  volumes:
+    - ~/docker/redis:/data
